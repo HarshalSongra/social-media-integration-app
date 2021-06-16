@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialintegrationapp/res/custom_colors.dart';
-import 'package:socialintegrationapp/utils/authentication.dart';
 import 'package:socialintegrationapp/widgets/googleSignInButton.dart';
+import 'package:socialintegrationapp/utils/authentication.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -21,15 +21,24 @@ class _SignInPageState extends State<SignInPage> {
             children: [
               Row(),
               Expanded(
-                flex: 8,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Social Media',
+                      'Social',
                       style: TextStyle(
                         color: CustomColors.firebaseYellow,
+                        fontSize: 40,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Text(
+                      'Media',
+                      style: TextStyle(
+                        color: CustomColors.firebaseAmber,
                         fontSize: 40,
                       ),
                     ),
@@ -56,24 +65,20 @@ class _SignInPageState extends State<SignInPage> {
                   ],
                 ),
               ),
-
-              Expanded(
-                flex: 1,
-                child: FutureBuilder(
-                  future: Authentication.initializeFirebase(context: context),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Error initializing Firebase');
-                    } else if (snapshot.connectionState == ConnectionState.done) {
-                      return GoogleSignInButton();
-                    }
-                    return CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        CustomColors.firebaseOrange,
-                      ),
-                    );
-                  },
-                ),
+              FutureBuilder(
+                future: Authentication.initializeFirebase(context: context),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Error initializing Firebase');
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    return GoogleSignInButton();
+                  }
+                  return CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      CustomColors.firebaseOrange,
+                    ),
+                  );
+                },
               ),
 
             ],
